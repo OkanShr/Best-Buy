@@ -55,9 +55,6 @@ class Product:
     def get_quantity(self) -> int:
         """
         Returns the current quantity of the product.
-
-        Returns:
-            int: The current quantity of the product.
         """
         return self.quantity
 
@@ -80,18 +77,12 @@ class Product:
     def is_active(self) -> bool:
         """
         Returns whether the product is active (in stock) or not.
-
-        Returns:
-            bool: True if the product is active (quantity > 0), otherwise False.
         """
         return self.active
 
     def show(self) -> str:
         """
         Returns a string representation of the product's name, price, and quantity.
-
-        Returns:
-            str: A string representation of the product.
         """
         return f"{self.name}, Price: ${self.price:.2f}, Quantity: {self.quantity}"
 

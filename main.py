@@ -3,16 +3,39 @@ from products import Product
 
 
 def list_products(store_obj):
+    """
+    Display all products currently available in the store.
+
+    Args:
+        store_obj (Store): The Store object containing the products to display.
+    """
     print("\nProducts in store:")
     store_obj.show_products()
 
 
 def show_total_quantity(store_obj):
+    """
+    Display the total quantity of all products in the store.
+
+    Args:
+        store_obj (Store): The Store object containing the products.
+
+    Prints:
+        The total quantity of all products in the store.
+    """
     total_quantity = store_obj.get_total_quantity()
     print(f"\nTotal quantity of all products in store: {total_quantity}")
 
 
 def make_order(store_obj):
+    """
+    Allow the user to make an order by selecting products and quantities.
+
+    Args:
+        store_obj (Store): The Store object containing the products to order.
+
+    Prompts the user to select products and their quantities, and prints the total price of the order.
+    """
     shopping_list = []
     print("\nSelect products to order:")
     products = store_obj.get_all_products()

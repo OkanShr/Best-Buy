@@ -26,7 +26,8 @@ class Store:
             Returns a list of all active products in the store.
 
         order(shopping_list: List[Tuple[Product, int]]) -> float:
-            Processes an order for a list of products and their quantities, and returns the total price.
+            Processes an order for a list of products and their quantities,
+            and returns the total price.
             Raises ValueError if any product in the shopping list is not found in the store.
     """
 
@@ -35,7 +36,8 @@ class Store:
         Initializes a new instance of the Store class.
 
         Args:
-            products (List[Product], optional): The initial list of products in the store. Defaults to None.
+            products (List[Product], optional): The initial
+            list of products in the store.Defaults to None.
         """
         if products is None:
             products = []
@@ -97,10 +99,12 @@ class Store:
 
     def order(self, shopping_list: List[Tuple[Product, int]]) -> float:
         """
-        Processes an order for a list of products and their quantities, and returns the total price.
+        Processes an order for a list of products and their quantities,
+        and returns the total price.
 
         Args:
-            shopping_list (List[Tuple[Product, int]]): A list of tuples, where each tuple contains a Product and an integer quantity.
+            shopping_list (List[Tuple[Product, int]]): A list of tuples,
+            where each tuple contains a Product and an integer quantity.
 
         Returns:
             float: The total price of the order.
