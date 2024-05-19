@@ -1,18 +1,18 @@
 class Product:
-    def __init__(self, name, quantity, price):
+    def __init__(self, name, price, quantity):
         if not name:
             raise NameError("Name cannot be empty")
         if price < 0:
-            raise NameError("Price can´t be negative")
+            raise ValueError("Price can't be negative")
         if quantity < 0:
-            raise NameError("Quantity can´t be negative")
+            raise ValueError("Quantity can't be negative")
 
         self.name = name
         self.price = price
         self.quantity = quantity
         self.active = True
 
-    def get_quantity(self) -> float:
+    def get_quantity(self) -> int:
         return self.quantity
 
     def set_quantity(self, quantity):
@@ -25,14 +25,8 @@ class Product:
     def is_active(self) -> bool:
         return self.active
 
-    def activate(self):
-        self.active = True
-
-    def deactivate(self):
-        self.active = False
-
     def show(self) -> str:
-        return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}"
+        return f"{self.name}, Price: ${self.price:.2f}, Quantity: {self.quantity}"
 
     def buy(self, quantity) -> float:
         if quantity <= 0:
