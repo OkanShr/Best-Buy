@@ -34,7 +34,8 @@ def make_order(store_obj):
     Args:
         store_obj (Store): The Store object containing the products to order.
 
-    Prompts the user to select products and their quantities, and prints the total price of the order.
+    Prompts the user to select products and their quantities,
+    and prints the total price of the order.
     """
     shopping_list = []
     print("\nSelect products to order:")
