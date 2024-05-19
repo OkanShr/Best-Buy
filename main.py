@@ -2,10 +2,6 @@ import store
 from products import Product
 
 
-import store
-from products import Product
-
-
 def list_products(store_obj):
     print("\nProducts in store:")
     store_obj.show_products()
