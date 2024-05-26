@@ -1,6 +1,5 @@
-from typing import List, Tuple
+from typing import List
 from products import Product
-
 
 class Store:
     """
@@ -37,7 +36,7 @@ class Store:
 
         Args:
             products (List[Product], optional): The initial
-            list of products in the store.Defaults to None.
+            list of products in the store. Defaults to None.
         """
         if products is None:
             products = []
@@ -86,7 +85,10 @@ class Store:
         Returns:
             int: The total quantity of all products in the store.
         """
-        return sum(product.get_quantity() for product in self.products)
+        total_quantity = 0
+        for product in self.products:
+            total_quantity += product.get_quantity()
+        return total_quantity
 
     def get_all_products(self) -> List[Product]:
         """
@@ -95,15 +97,21 @@ class Store:
         Returns:
             List[Product]: A list of all active products in the store.
         """
-        return [product for product in self.products if product.is_active()]
+        active_products = []
+        for product in self.products:
+            if hasattr(product, 'is_active') and product.is_active():
+                active_products.append(product)
+            elif not hasattr(product, 'is_active') and product.quantity > 0:
+                active_products.append(product)
+        return active_products
 
-    def order(self, shopping_list: List[Tuple[Product, int]]) -> float:
+    def order(self, shopping_list: List[tuple]) -> float:
         """
         Processes an order for a list of products and their quantities,
         and returns the total price.
 
         Args:
-            shopping_list (List[Tuple[Product, int]]): A list of tuples,
+            shopping_list (List[tuple]): A list of tuples,
             where each tuple contains a Product and an integer quantity.
 
         Returns:
