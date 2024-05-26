@@ -1,5 +1,6 @@
-from typing import List
+from typing import List, Tuple
 from products import Product
+
 
 class Store:
     """
@@ -99,20 +100,18 @@ class Store:
         """
         active_products = []
         for product in self.products:
-            if hasattr(product, 'is_active') and product.is_active():
-                active_products.append(product)
-            elif not hasattr(product, 'is_active') and product.quantity > 0:
+            if isinstance(product, Product) and product.get_quantity() > 0:
                 active_products.append(product)
         return active_products
 
-    def order(self, shopping_list: List[tuple]) -> float:
+    def order(self, shopping_list: List[Tuple[Product, int]]) -> float:
         """
         Processes an order for a list of products and their quantities,
         and returns the total price.
 
         Args:
-            shopping_list (List[tuple]): A list of tuples,
-            where each tuple contains a Product and an integer quantity.
+            shopping_list (List[Tuple[Product, int]]): A list of tuples,
+                where each tuple contains a Product and an integer quantity.
 
         Returns:
             float: The total price of the order.

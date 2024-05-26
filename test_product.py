@@ -8,7 +8,7 @@ def test_create_normal_product():
     assert product.name == "Test Product"
     assert product.price == 10.0
     assert product.quantity == 5
-    assert product.is_active() == True
+    assert product.is_active == True
 
 
 def test_create_product_with_invalid_details():
@@ -26,7 +26,7 @@ def test_product_becomes_inactive_when_quantity_is_zero():
     product = Product("Test Product", price=10.0, quantity=1)
     product.buy(1)
     assert product.get_quantity() == 0
-    assert product.is_active() == False
+    assert product.is_active == False
 
 
 def test_product_purchase_modifies_quantity_and_returns_correct_output():
@@ -42,6 +42,5 @@ def test_buying_larger_quantity_than_exists_invokes_exception():
     product = Product("Test Product", price=10.0, quantity=5)
     with pytest.raises(ValueError):
         product.buy(6)
-
 
 # pytest test_product.py

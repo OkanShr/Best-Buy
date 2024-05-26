@@ -42,8 +42,10 @@ class Product(ABC):
             quantity (int): The initial quantity of the product.
 
         Raises:
-            ValueError: If price or quantity is negative.
+            ValueError: If name is empty, price or quantity is negative.
         """
+        if not name:
+            raise NameError("Name cannot be empty")
         if price < 0:
             raise ValueError("Price can't be negative")
         if quantity < 0:
@@ -54,6 +56,12 @@ class Product(ABC):
         self.quantity = quantity
         self.promotion = None  # No initial promotion
         self.is_active = True  # Product is active by default
+
+    def is_active(self) -> bool:
+        """
+        Returns the status of the product
+        """
+        return self.is_active
 
     def get_quantity(self) -> int:
         """
@@ -81,12 +89,10 @@ class Product(ABC):
             float: The total price of the purchase.
         """
         if quantity <= 0:
-            print("Purchase quantity must be positive")
-            return 0.0
+            raise ValueError("Purchase quantity must be positive")
 
         if quantity > self.quantity:
-            print("Not enough stock available")
-            return 0.0
+            raise ValueError("Not enough stock available")
 
         # Calculate the total price with promotion if applicable
         if self.promotion:
@@ -146,8 +152,7 @@ class NonStockedProduct(Product):
             float: The fixed price of the non-stocked product.
         """
         if quantity <= 0:
-            print("Purchase quantity must be positive")
-            return 0.0
+            raise ValueError("Purchase quantity must be positive")
 
         # Apply promotion if set
         if self.promotion:
@@ -197,12 +202,10 @@ class LimitedProduct(Product):
             float: The total price of the purchase.
         """
         if quantity <= 0:
-            print("Purchase quantity must be positive")
-            return 0.0
+            raise ValueError("Purchase quantity must be positive")
 
         if quantity > self.maximum:
-            print(f"Maximum purchase quantity exceeded. Maximum is {self.maximum}")
-            return 0.0
+            raise ValueError(f"Maximum purchase quantity exceeded. Maximum is {self.maximum}")
 
         # Apply promotion if set
         if self.promotion:
