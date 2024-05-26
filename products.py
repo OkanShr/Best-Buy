@@ -11,17 +11,19 @@ class Product(ABC):
         price (float): The price of the product.
         quantity (int): The quantity of the product in stock.
         promotion (Promotion): The promotion applied to the product (optional).
+        is_active (bool): Whether the product is active or not.
 
     Methods:
         get_quantity() -> int:
             Returns the current quantity of the product.
 
         show() -> str:
-            Returns a string representation of the product's name, price, and quantity.
+            Returns a string representation of the product's name, price, quantity, and active status.
 
         buy(quantity) -> float:
             Buys a given quantity of the product, updates the quantity, and returns the total price.
             Prints an error message if the quantity is negative or exceeds the available stock.
+            Deactivates the product when quantity reaches zero.
 
         set_promotion(promotion: Promotion):
             Sets a promotion to be applied to the product.
@@ -51,6 +53,7 @@ class Product(ABC):
         self.price = price
         self.quantity = quantity
         self.promotion = None  # No initial promotion
+        self.is_active = True  # Product is active by default
 
     def get_quantity(self) -> int:
         """
@@ -60,10 +63,11 @@ class Product(ABC):
 
     def show(self) -> str:
         """
-        Returns a string representation of the product's name, price, and quantity.
+        Returns a string representation of the product's name, price, quantity, and active status.
         """
         promotion_info = f" (Promotion: {self.promotion.name})" if self.promotion else ""
-        return f"{self.name}, Price: ${self.price:.2f}, Quantity: {self.quantity}{promotion_info}"
+        active_status = "Active" if self.is_active else "Inactive"
+        return f"{self.name}, Price: ${self.price:.2f}, Quantity: {self.quantity}, Status: {active_status}{promotion_info}"
 
     def buy(self, quantity) -> float:
         """
@@ -91,6 +95,10 @@ class Product(ABC):
             total_price = quantity * self.price
 
         self.quantity -= quantity
+
+        # Deactivate the product if quantity becomes zero
+        if self.quantity == 0:
+            self.is_active = False
 
         return total_price
 
@@ -154,7 +162,8 @@ class NonStockedProduct(Product):
         Override the show method to include the price.
         """
         promotion_info = f" (Promotion: {self.promotion.name})" if self.promotion else ""
-        return f"{self.name}, Price: ${self.price:.2f}{promotion_info}"
+        active_status = "Active" if self.is_active else "Inactive"
+        return f"{self.name}, Price: ${self.price:.2f}, Status: {active_status}{promotion_info}"
 
 
 class LimitedProduct(Product):
@@ -203,6 +212,10 @@ class LimitedProduct(Product):
 
         self.quantity -= quantity
 
+        # Deactivate the product if quantity becomes zero
+        if self.quantity == 0:
+            self.is_active = False
+
         return total_price
 
     def show(self) -> str:
@@ -210,4 +223,5 @@ class LimitedProduct(Product):
         Override the show method to include the maximum quantity and price.
         """
         promotion_info = f" (Promotion: {self.promotion.name})" if self.promotion else ""
-        return f"{self.name}, Price: ${self.price:.2f}, Quantity: {self.quantity}, Maximum: {self.maximum}{promotion_info}"
+        active_status = "Active" if self.is_active else "Inactive"
+        return f"{self.name}, Price: ${self.price:.2f}, Quantity: {self.quantity}, Maximum: {self.maximum}, Status: {active_status}{promotion_info}"
