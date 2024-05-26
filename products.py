@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from promotions import Promotion
 
+
 class Product(ABC):
     """
     A class that represents a product.
@@ -20,14 +21,13 @@ class Product(ABC):
 
         buy(quantity) -> float:
             Buys a given quantity of the product, updates the quantity, and returns the total price.
-            Raises ValueError if the quantity is negative or exceeds the available stock.
+            Prints an error message if the quantity is negative or exceeds the available stock.
 
         set_promotion(promotion: Promotion):
             Sets a promotion to be applied to the product.
 
         remove_promotion():
             Removes the promotion from the product.
-
     """
 
     def __init__(self, name, price, quantity):
@@ -68,22 +68,28 @@ class Product(ABC):
     def buy(self, quantity) -> float:
         """
         Buys a given quantity of the product, updates the quantity, and returns the total price.
+        Applies any promotion if set.
 
         Args:
             quantity (int): The quantity of the product to buy.
 
         Returns:
             float: The total price of the purchase.
-
-        Raises:
-            ValueError: If the quantity is negative or exceeds the available stock.
         """
         if quantity <= 0:
-            raise ValueError("Purchase quantity can't be negative")
-        if quantity > self.quantity:
-            raise ValueError("Not enough stock available")
+            print("Purchase quantity must be positive")
+            return 0.0
 
-        total_price = quantity * self.price
+        if quantity > self.quantity:
+            print("Not enough stock available")
+            return 0.0
+
+        # Calculate the total price with promotion if applicable
+        if self.promotion:
+            total_price = self.promotion.apply_promotion(self, quantity)
+        else:
+            total_price = quantity * self.price
+
         self.quantity -= quantity
 
         return total_price
@@ -123,6 +129,7 @@ class NonStockedProduct(Product):
     def buy(self, quantity) -> float:
         """
         Override the buy method for non-stocked products to always return the fixed price.
+        Applies any promotion if set.
 
         Args:
             quantity (int): The quantity of the non-stocked product to "buy".
@@ -130,7 +137,17 @@ class NonStockedProduct(Product):
         Returns:
             float: The fixed price of the non-stocked product.
         """
-        return self.price
+        if quantity <= 0:
+            print("Purchase quantity must be positive")
+            return 0.0
+
+        # Apply promotion if set
+        if self.promotion:
+            total_price = self.promotion.apply_promotion(self, quantity)
+        else:
+            return self.price
+
+        return total_price
 
     def show(self) -> str:
         """
@@ -162,22 +179,28 @@ class LimitedProduct(Product):
     def buy(self, quantity) -> float:
         """
         Override the buy method for limited products to check against the maximum quantity.
+        Applies any promotion if set.
 
         Args:
             quantity (int): The quantity of the limited product to buy.
 
         Returns:
             float: The total price of the purchase.
-
-        Raises:
-            ValueError: If the quantity exceeds the maximum allowed.
         """
         if quantity <= 0:
-            raise ValueError("Purchase quantity can't be negative")
-        if quantity > self.maximum:
-            raise ValueError(f"Maximum purchase quantity exceeded. Maximum is {self.maximum}")
+            print("Purchase quantity must be positive")
+            return 0.0
 
-        total_price = quantity * self.price
+        if quantity > self.maximum:
+            print(f"Maximum purchase quantity exceeded. Maximum is {self.maximum}")
+            return 0.0
+
+        # Apply promotion if set
+        if self.promotion:
+            total_price = self.promotion.apply_promotion(self, quantity)
+        else:
+            total_price = quantity * self.price
+
         self.quantity -= quantity
 
         return total_price
