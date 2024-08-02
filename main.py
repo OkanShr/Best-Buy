@@ -46,7 +46,8 @@ def make_order(store_obj):
     print("0. Done ordering")
 
     while True:
-        selection = input("Enter product number to order (0 to finish): ").strip()
+        selection = input("Enter product number "
+                          "to order (0 to finish): ").strip()
         if selection == "0":
             break
         try:
@@ -54,10 +55,12 @@ def make_order(store_obj):
             if 1 <= selection <= len(products):
                 product_to_order = products[selection - 1]
                 qty_to_order = int(input(f"Enter quantity for '"
-                                         f"{product_to_order.name}': ").strip())
+                                         f"{product_to_order.name}': "
+                                         ).strip())
                 shopping_list.append((product_to_order, qty_to_order))
             else:
-                print("Invalid selection. Please enter a valid product number.")
+                print("Invalid selection. "
+                      "Please enter a valid product number.")
         except ValueError:
             print("Invalid input. Please enter a number.")
 
@@ -109,10 +112,12 @@ if __name__ == "__main__":
     # Setup initial stock of inventory
     product_list = [
         products.Product("MacBook Air M2", price=1450, quantity=100),
-        products.Product("Bose QuietComfort Earbuds", price=250, quantity=500),
+        products.Product("Bose QuietComfort Earbuds",
+                         price=250, quantity=500),
         products.Product("Google Pixel 7", price=500, quantity=250),
         products.NonStockedProduct("Windows License", price=125),
-        products.LimitedProduct("Shipping", price=10, quantity=250, maximum=1)
+        products.LimitedProduct("Shipping", price=10,
+                                quantity=250, maximum=1)
     ]
 
     # Create promotion catalog

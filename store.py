@@ -118,7 +118,8 @@ class Store:
             float: The total price of the order.
 
         Raises:
-            ValueError: If any product in the shopping list is not found in the store.
+            ValueError: If any product in the shopping
+            list is not found in the store.
         """
         total_price = 0.0
         for product, quantity in shopping_list:

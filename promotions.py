@@ -16,7 +16,8 @@ class Promotion(ABC):
 
         Args:
             product (Product): The product on which the promotion is applied.
-            quantity (int): The quantity of the product to apply the promotion to.
+            quantity (int): The quantity
+            of the product to apply the promotion to.
 
         Returns:
             float: The discounted price after applying the promotion.
@@ -46,7 +47,8 @@ class PercentDiscount(Promotion):
 
         Args:
             product (Product): The product on which the promotion is applied.
-            quantity (int): The quantity of the product to apply the promotion to.
+            quantity (int): The quantity
+            of the product to apply the promotion to.
 
         Returns:
             float: The discounted price after applying the promotion.
@@ -77,7 +79,8 @@ class SecondHalfPrice(Promotion):
 
         Args:
             product (Product): The product on which the promotion is applied.
-            quantity (int): The quantity of the product to apply the promotion to.
+            quantity (int): The quantity
+            of the product to apply the promotion to.
 
         Returns:
             float: The discounted price after applying the promotion.
@@ -112,7 +115,8 @@ class ThirdOneFree(Promotion):
 
         Args:
             product (Product): The product on which the promotion is applied.
-            quantity (int): The quantity of the product to apply the promotion to.
+            quantity (int): The quantity
+            of the product to apply the promotion to.
 
         Returns:
             float: The discounted price after applying the promotion.
