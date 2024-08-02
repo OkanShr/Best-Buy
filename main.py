@@ -1,6 +1,5 @@
 import store
-import products
-import promotions
+from products import Product
 
 
 def list_products(store_obj):
@@ -46,17 +45,21 @@ def make_order(store_obj):
     print("0. Done ordering")
 
     while True:
-        selection = input("Enter product number to order (0 to finish): ").strip()
+        selection = input("Enter product number "
+                          "to order (0 to finish): ").strip()
         if selection == "0":
             break
         try:
             selection = int(selection)
             if 1 <= selection <= len(products):
                 product_to_order = products[selection - 1]
-                qty_to_order = int(input(f"Enter quantity for '{product_to_order.name}': ").strip())
+                qty_to_order = int(input(f"Enter quantity for "
+                                         f"'{product_to_order.name}'"
+                                         f": ").strip())
                 shopping_list.append((product_to_order, qty_to_order))
             else:
-                print("Invalid selection. Please enter a valid product number.")
+                print("Invalid selection. "
+                      "Please enter a valid product number.")
         except ValueError:
             print("Invalid input. Please enter a number.")
 
@@ -104,28 +107,19 @@ def start(store_obj):
             print("Invalid choice. Please enter a number between 1 and 4.")
 
 
-if __name__ == "__main__":
+def main():
     # Setup initial stock of inventory
     product_list = [
-        products.Product("MacBook Air M2", price=1450, quantity=100),
-        products.Product("Bose QuietComfort Earbuds", price=250, quantity=500),
-        products.Product("Google Pixel 7", price=500, quantity=250),
-        products.NonStockedProduct("Windows License", price=125),
-        products.LimitedProduct("Shipping", price=10, quantity=250, maximum=1)
+        Product("MacBook Air M2", price=1450, quantity=100),
+        Product("Bose QuietComfort Earbuds", price=250, quantity=500),
+        Product("Google Pixel 7", price=500, quantity=250)
     ]
 
-    # Create promotion catalog
-    second_half_price = promotions.SecondHalfPrice("Second Half price!")
-    third_one_free = promotions.ThirdOneFree("Third One Free!")
-    thirty_percent = promotions.PercentDiscount("30% off!", percent=30)
-
-    # Add promotions to products
-    product_list[0].set_promotion(second_half_price)
-    product_list[1].set_promotion(third_one_free)
-    product_list[3].set_promotion(thirty_percent)
-
-    # Initialize store
     best_buy = store.Store(product_list)
 
     # Start the user interface
     start(best_buy)
+
+
+if __name__ == "__main__":
+    main()

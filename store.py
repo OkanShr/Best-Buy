@@ -28,7 +28,8 @@ class Store:
         order(shopping_list: List[Tuple[Product, int]]) -> float:
             Processes an order for a list of products and their quantities,
             and returns the total price.
-            Raises ValueError if any product in the shopping list is not found in the store.
+            Raises ValueError if any product in the shopping list
+            is not found in the store.
     """
 
     def __init__(self, products=None):
@@ -37,7 +38,7 @@ class Store:
 
         Args:
             products (List[Product], optional): The initial
-            list of products in the store. Defaults to None.
+            list of products in the store.Defaults to None.
         """
         if products is None:
             products = []
@@ -86,10 +87,7 @@ class Store:
         Returns:
             int: The total quantity of all products in the store.
         """
-        total_quantity = 0
-        for product in self.products:
-            total_quantity += product.get_quantity()
-        return total_quantity
+        return sum(product.get_quantity() for product in self.products)
 
     def get_all_products(self) -> List[Product]:
         """
@@ -98,11 +96,7 @@ class Store:
         Returns:
             List[Product]: A list of all active products in the store.
         """
-        active_products = []
-        for product in self.products:
-            if isinstance(product, Product) and product.get_quantity() > 0:
-                active_products.append(product)
-        return active_products
+        return [product for product in self.products if product.is_active()]
 
     def order(self, shopping_list: List[Tuple[Product, int]]) -> float:
         """
@@ -111,13 +105,14 @@ class Store:
 
         Args:
             shopping_list (List[Tuple[Product, int]]): A list of tuples,
-                where each tuple contains a Product and an integer quantity.
+            where each tuple contains a Product and an integer quantity.
 
         Returns:
             float: The total price of the order.
 
         Raises:
-            ValueError: If any product in the shopping list is not found in the store.
+            ValueError: If any product in the shopping list
+            is not found in the store.
         """
         total_price = 0.0
         for product, quantity in shopping_list:
